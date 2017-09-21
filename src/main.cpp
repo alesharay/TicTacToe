@@ -5,17 +5,53 @@ using namespace std;
 
 int main(void)
 {
-	Board gameBoard;
+	bool again = true;
 
-	gameBoard.display();
+	do
+	{
+		Board gameBoard;
+		gameBoard.display();
 
-	gameBoard.move(5, 1);
+		int player = 1;
+		int moves = 1;
 
-	gameBoard.display();
+		while(!gameBoard.gameWon() && !gameBoard.gameDraw())
+		{
+				cout << "\n\nPlayer " << player << ", please choose an option: ";
+				int option;
+				cin >> option;
 
-	gameBoard.move(7, 2);
+				bool validMove = gameBoard.move(option, player);
+				gameBoard.display();
 
-	gameBoard.display();
+				while(!validMove)
+				{
+						cout << "\nThat is an invalid option, please try again: ";
+						cin >> option;
+						validMove = gameBoard.move(option, player);
+						gameBoard.display();
+						cout << endl;
+				}
+
+				if(!gameBoard.gameWon())
+				{
+						if(player == 1)
+								player++;
+						else
+								player--;
+				}
+		}
+
+		if(gameBoard.gameDraw())
+				cout << "\nIt's a cat's game!" << endl;
+		else
+				cout << "\nCongratulations! Player " << player << ", you are the winner!" << endl;
+	
+		
+		cout << "\nWould you like to play again? (1-yes, 0-no): ";
+		cin >> again;
+
+	}while(again);
 
 	return 0;
 }

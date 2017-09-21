@@ -9,7 +9,7 @@ class Board
 private:
 	// private data members
 	char stateOfGame[3][3];
-	//char player[2];
+	int moves;
 
 	// private functions
 	void sampleBoardDisplay() const;
@@ -20,4 +20,6 @@ public:
 	Board();
 	void display();
 	bool move(int, int);
+	bool gameWon();
+	bool gameDraw();
 };

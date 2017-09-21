@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board()
+Board::Board(): moves(0)
 {
 	for(int i=0; i<3; i++)
 	{
@@ -9,16 +9,6 @@ Board::Board()
 			stateOfGame[i][j]='*';
 		}
 	}
-
-	/*
-	for(int k=0; k<2; k++)
-	{
-		if(k==0)
-			player[k]='X';
-		else
-			player[k]='O';
-	}
-	*/
 }
 
 void Board::sampleBoardDisplay() const
@@ -80,7 +70,7 @@ bool Board::move(int choice, int playerNum)
 {
 
 	bool validOption;
-	if(choice < 1 || choice > 7)
+	if(choice < 1 || choice > 9)
 		validOption = false;
 	else
 	{
@@ -118,8 +108,45 @@ bool Board::move(int choice, int playerNum)
 				break;
 		}
 	}
-
+	
+	if(validOption)
+		moves++;
 	return validOption;
+}
+
+bool Board::gameWon()
+{
+	bool won = ((stateOfGame[0][0] == stateOfGame[0][1]) && 
+				(stateOfGame[0][1] == stateOfGame[0][2]) &&
+				(stateOfGame[0][0] != '*')) ||
+			   ((stateOfGame[1][0] == stateOfGame[1][1]) && 
+				(stateOfGame[1][1] == stateOfGame[1][2]) &&
+				(stateOfGame[1][0] != '*'))	||
+			   ((stateOfGame[2][0] == stateOfGame[2][1]) && 
+				(stateOfGame[2][1] == stateOfGame[2][2]) &&
+				(stateOfGame[2][0] != '*')) ||
+			   ((stateOfGame[0][0] == stateOfGame[1][1]) && 
+				(stateOfGame[1][1] == stateOfGame[2][2]) &&
+				(stateOfGame[0][0] != '*')) ||
+			   ((stateOfGame[2][0] == stateOfGame[1][1]) && 
+				(stateOfGame[1][1] == stateOfGame[0][2]) &&
+				(stateOfGame[2][0] != '*')) ||
+			   ((stateOfGame[0][0] == stateOfGame[1][0]) && 
+				(stateOfGame[1][0] == stateOfGame[2][0]) &&
+				(stateOfGame[0][0] != '*')) ||
+			   ((stateOfGame[0][1] == stateOfGame[1][1]) && 
+				(stateOfGame[1][1] == stateOfGame[2][1]) &&
+				(stateOfGame[0][1] != '*')) ||
+			   ((stateOfGame[0][2] == stateOfGame[1][2]) && 
+				(stateOfGame[1][2] == stateOfGame[2][2]) &&
+				(stateOfGame[0][2] != '*'));
+		
+	return won;	
+}
+
+bool Board::gameDraw()
+{
+	return moves > 8 && !gameWon() ? true : false;
 }
 
 void Board::display()
