@@ -118,6 +118,9 @@ bool Board::move(int choice, int player)
 
 	return validOption;
 }
-		}
-	}
+
+void Board::display()
+{
+	sampleBoardDisplay();
+	updatedBoardDisplay();
 }
