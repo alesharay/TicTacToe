@@ -27,3 +27,30 @@ void Board::sampleBoardDisplay() const
 		 << "---------\n"
 		 << "1 | 2 | 3\n" << endl;
 }
+
+#include<string>
+void Board::updatedBoardDisplay()
+{
+	cout << "\n\n\n";
+
+	for(int i=0; i<3; i++)
+	{
+		for(int j=0; j<3; j++)
+		{
+			if((j+1)%3)
+			{
+				cout << stateOfGame[i][j] << " | ";
+			}
+			else
+			{
+				cout << stateOfGame[i][j];
+			}
+		}
+
+		if((i+1)%3)
+		{
+			cout << endl << string(9, '-') << endl;
+		}
+	}
+	cout << endl;
+}
