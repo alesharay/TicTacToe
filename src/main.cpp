@@ -3,7 +3,9 @@ using namespace std;
 
 int main(void)
 {
-	cout << "Hello, World!" << endl;
+	Board gameBoard;
+
+	gameBoard.display();
 
 	return 0;
 }
