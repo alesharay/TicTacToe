@@ -9,5 +9,13 @@ int main(void)
 
 	gameBoard.display();
 
+	gameBoard.move(5, 1);
+
+	gameBoard.display();
+
+	gameBoard.move(7, 2);
+
+	gameBoard.display();
+
 	return 0;
 }

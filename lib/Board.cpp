@@ -10,6 +10,7 @@ Board::Board()
 		}
 	}
 
+	/*
 	for(int k=0; k<2; k++)
 	{
 		if(k==0)
@@ -17,6 +18,7 @@ Board::Board()
 		else
 			player[k]='O';
 	}
+	*/
 }
 
 void Board::sampleBoardDisplay() const
@@ -57,12 +59,12 @@ void Board::updatedBoardDisplay()
 
 bool Board::stateOfGameUpdate(int row, int col, int playerNum)
 {
-	if(stateOfGame[row][col]!='*')
+	if(stateOfGame[row][col] != '*')
 		return false;
 
 	playerNum=playerNum-1;
 
-	if(player[playerNum] == 0)
+	if(playerNum == 0)
 	{
 		stateOfGame[row][col] = 'X';
 		return true;
@@ -74,8 +76,9 @@ bool Board::stateOfGameUpdate(int row, int col, int playerNum)
 	}
 }
 
-bool Board::move(int choice, int player)
+bool Board::move(int choice, int playerNum)
 {
+
 	bool validOption;
 	if(choice < 1 || choice > 7)
 		validOption = false;
@@ -84,31 +87,31 @@ bool Board::move(int choice, int player)
 		switch(choice)
 		{
 			case 1:
-				validOption = stateOfGameUpdate(2,0,player);
+				validOption = stateOfGameUpdate(2,0,playerNum);
 				break;
 			case 2:
-				validOption = stateOfGameUpdate(2,1,player);
+				validOption = stateOfGameUpdate(2,1,playerNum);
 				break;
 			case 3:
-				validOption = stateOfGameUpdate(2,2,player);
+				validOption = stateOfGameUpdate(2,2,playerNum);
 				break;
 			case 4:
-				validOption = stateOfGameUpdate(1,0,player);
+				validOption = stateOfGameUpdate(1,0,playerNum);
 				break;
 			case 5:
-				validOption = stateOfGameUpdate(1,1,player);
+				validOption = stateOfGameUpdate(1,1,playerNum);
 				break;
 			case 6:
-				validOption = stateOfGameUpdate(1,2,player);
+				validOption = stateOfGameUpdate(1,2,playerNum);
 				break;
 			case 7:
-				validOption = stateOfGameUpdate(0,0,player);
+				validOption = stateOfGameUpdate(0,0,playerNum);
 				break;
 			case 8:
-				validOption = stateOfGameUpdate(0,1,player);
+				validOption = stateOfGameUpdate(0,1,playerNum);
 				break;
 			case 9:
-				validOption = stateOfGameUpdate(0,2,player);
+				validOption = stateOfGameUpdate(0,2,playerNum);
 				break;
 			default:
 				validOption = false;
