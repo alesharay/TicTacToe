@@ -54,3 +54,70 @@ void Board::updatedBoardDisplay()
 	}
 	cout << endl;
 }
+
+bool Board::stateOfGameUpdate(int row, int col, int playerNum)
+{
+	if(stateOfGame[row][col]!='*')
+		return false;
+
+	playerNum=playerNum-1;
+
+	if(player[playerNum] == 0)
+	{
+		stateOfGame[row][col] = 'X';
+		return true;
+	}
+	else
+	{
+		stateOfGame[row][col] = 'O';
+		return true;
+	}
+}
+
+bool Board::move(int choice, int player)
+{
+	bool validOption;
+	if(choice < 1 || choice > 7)
+		validOption = false;
+	else
+	{
+		switch(choice)
+		{
+			case 1:
+				validOption = stateOfGameUpdate(2,0,player);
+				break;
+			case 2:
+				validOption = stateOfGameUpdate(2,1,player);
+				break;
+			case 3:
+				validOption = stateOfGameUpdate(2,2,player);
+				break;
+			case 4:
+				validOption = stateOfGameUpdate(1,0,player);
+				break;
+			case 5:
+				validOption = stateOfGameUpdate(1,1,player);
+				break;
+			case 6:
+				validOption = stateOfGameUpdate(1,2,player);
+				break;
+			case 7:
+				validOption = stateOfGameUpdate(0,0,player);
+				break;
+			case 8:
+				validOption = stateOfGameUpdate(0,1,player);
+				break;
+			case 9:
+				validOption = stateOfGameUpdate(0,2,player);
+				break;
+			default:
+				validOption = false;
+				break;
+		}
+	}
+
+	return validOption;
+}
+		}
+	}
+}
