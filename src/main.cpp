@@ -10,7 +10,7 @@ int main(void)
 	do
 	{
 		Board gameBoard;
-		gameBoard.display();
+		gameBoard.displayBoard();
 
 		int player = 1;
 		int moves = 1;
@@ -21,15 +21,15 @@ int main(void)
 				int option;
 				cin >> option;
 
-				bool validMove = gameBoard.move(option, player);
-				gameBoard.display();
+				bool validMove = gameBoard.boxChosen(option, player);
+				gameBoard.displayBoard();
 
 				while(!validMove)
 				{
 						cout << "\nThat is an invalid option, please try again: ";
 						cin >> option;
-						validMove = gameBoard.move(option, player);
-						gameBoard.display();
+						validMove = gameBoard.boxChosen(option, player);
+						gameBoard.displayBoard();
 						cout << endl;
 				}
 

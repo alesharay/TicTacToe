@@ -1,17 +1,17 @@
 #include "Board.h"
 
-Board::Board(): moves(0)
+Board::Board(): m_moves(0)
 {
 	for(int i=0; i<3; i++)
 	{
 		for(int j=0; j<3; j++)
 		{
-			stateOfGame[i][j]='*';
+			m_stateOfGame[i][j]='*';
 		}
 	}
 }
 
-void Board::sampleBoardDisplay() const
+void Board::displaySampleBoard() const
 {
 	cout << "\n7 | 8 | 9\n"
 		 << "---------\n"
@@ -21,7 +21,7 @@ void Board::sampleBoardDisplay() const
 }
 
 #include<string>
-void Board::updatedBoardDisplay()
+void Board::displayUpdatedBoard()
 {
 	cout << "\n\n\n";
 
@@ -31,11 +31,11 @@ void Board::updatedBoardDisplay()
 		{
 			if((j+1)%3)
 			{
-				cout << stateOfGame[i][j] << " | ";
+				cout << m_stateOfGame[i][j] << " | ";
 			}
 			else
 			{
-				cout << stateOfGame[i][j];
+				cout << m_stateOfGame[i][j];
 			}
 		}
 
@@ -47,29 +47,32 @@ void Board::updatedBoardDisplay()
 	cout << endl;
 }
 
-bool Board::stateOfGameUpdate(int row, int col, int playerNum)
+bool Board::stateOfGameUpdated(int row, int col, int playerNum)
 {
-	if(stateOfGame[row][col] != '*')
+	if(m_stateOfGame[row][col] != '*')
 		return false;
 
 	playerNum=playerNum-1;
+	
+	assert(playerNum == 1 || playerNum == 2);
 
 	if(playerNum == 0)
 	{
-		stateOfGame[row][col] = 'X';
+		m_stateOfGame[row][col] = 'X';
 		return true;
 	}
 	else
 	{
-		stateOfGame[row][col] = 'O';
+		m_stateOfGame[row][col] = 'O';
 		return true;
 	}
 }
 
-bool Board::move(int choice, int playerNum)
+bool Board::boxChosen(int choice, int playerNum)
 {
 
 	bool validOption;
+	
 	if(choice < 1 || choice > 9)
 		validOption = false;
 	else
@@ -77,31 +80,31 @@ bool Board::move(int choice, int playerNum)
 		switch(choice)
 		{
 			case 1:
-				validOption = stateOfGameUpdate(2,0,playerNum);
+				validOption = stateOfGameUpdated(2,0,playerNum);
 				break;
 			case 2:
-				validOption = stateOfGameUpdate(2,1,playerNum);
+				validOption = stateOfGameUpdated(2,1,playerNum);
 				break;
 			case 3:
-				validOption = stateOfGameUpdate(2,2,playerNum);
+				validOption = stateOfGameUpdated(2,2,playerNum);
 				break;
 			case 4:
-				validOption = stateOfGameUpdate(1,0,playerNum);
+				validOption = stateOfGameUpdated(1,0,playerNum);
 				break;
 			case 5:
-				validOption = stateOfGameUpdate(1,1,playerNum);
+				validOption = stateOfGameUpdated(1,1,playerNum);
 				break;
 			case 6:
-				validOption = stateOfGameUpdate(1,2,playerNum);
+				validOption = stateOfGameUpdated(1,2,playerNum);
 				break;
 			case 7:
-				validOption = stateOfGameUpdate(0,0,playerNum);
+				validOption = stateOfGameUpdated(0,0,playerNum);
 				break;
 			case 8:
-				validOption = stateOfGameUpdate(0,1,playerNum);
+				validOption = stateOfGameUpdated(0,1,playerNum);
 				break;
 			case 9:
-				validOption = stateOfGameUpdate(0,2,playerNum);
+				validOption = stateOfGameUpdated(0,2,playerNum);
 				break;
 			default:
 				validOption = false;
@@ -110,47 +113,48 @@ bool Board::move(int choice, int playerNum)
 	}
 	
 	if(validOption)
-		moves++;
+		m_moves++;
 	return validOption;
 }
 
 bool Board::gameWon()
 {
-	bool won = ((stateOfGame[0][0] == stateOfGame[0][1]) && 
-				(stateOfGame[0][1] == stateOfGame[0][2]) &&
-				(stateOfGame[0][0] != '*')) ||
-			   ((stateOfGame[1][0] == stateOfGame[1][1]) && 
-				(stateOfGame[1][1] == stateOfGame[1][2]) &&
-				(stateOfGame[1][0] != '*'))	||
-			   ((stateOfGame[2][0] == stateOfGame[2][1]) && 
-				(stateOfGame[2][1] == stateOfGame[2][2]) &&
-				(stateOfGame[2][0] != '*')) ||
-			   ((stateOfGame[0][0] == stateOfGame[1][1]) && 
-				(stateOfGame[1][1] == stateOfGame[2][2]) &&
-				(stateOfGame[0][0] != '*')) ||
-			   ((stateOfGame[2][0] == stateOfGame[1][1]) && 
-				(stateOfGame[1][1] == stateOfGame[0][2]) &&
-				(stateOfGame[2][0] != '*')) ||
-			   ((stateOfGame[0][0] == stateOfGame[1][0]) && 
-				(stateOfGame[1][0] == stateOfGame[2][0]) &&
-				(stateOfGame[0][0] != '*')) ||
-			   ((stateOfGame[0][1] == stateOfGame[1][1]) && 
-				(stateOfGame[1][1] == stateOfGame[2][1]) &&
-				(stateOfGame[0][1] != '*')) ||
-			   ((stateOfGame[0][2] == stateOfGame[1][2]) && 
-				(stateOfGame[1][2] == stateOfGame[2][2]) &&
-				(stateOfGame[0][2] != '*'));
+	bool won = ((m_stateOfGame[0][0] == m_stateOfGame[0][1]) && 
+				(m_stateOfGame[0][1] == m_stateOfGame[0][2]) &&
+				(m_stateOfGame[0][0] != '*')) ||
+			   ((m_stateOfGame[1][0] == m_stateOfGame[1][1]) && 
+				(m_stateOfGame[1][1] == m_stateOfGame[1][2]) &&
+				(m_stateOfGame[1][0] != '*'))	||
+			   ((m_stateOfGame[2][0] == m_stateOfGame[2][1]) && 
+				(m_stateOfGame[2][1] == m_stateOfGame[2][2]) &&
+				(m_stateOfGame[2][0] != '*')) ||
+			   ((m_stateOfGame[0][0] == m_stateOfGame[1][1]) && 
+				(m_stateOfGame[1][1] == m_stateOfGame[2][2]) &&
+				(m_stateOfGame[0][0] != '*')) ||
+			   ((m_stateOfGame[2][0] == m_stateOfGame[1][1]) && 
+				(m_stateOfGame[1][1] == m_stateOfGame[0][2]) &&
+				(m_stateOfGame[2][0] != '*')) ||
+			   ((m_stateOfGame[0][0] == m_stateOfGame[1][0]) && 
+				(m_stateOfGame[1][0] == m_stateOfGame[2][0]) &&
+				(m_stateOfGame[0][0] != '*')) ||
+			   ((m_stateOfGame[0][1] == m_stateOfGame[1][1]) && 
+				(m_stateOfGame[1][1] == m_stateOfGame[2][1]) &&
+				(m_stateOfGame[0][1] != '*')) ||
+			   ((m_stateOfGame[0][2] == m_stateOfGame[1][2]) && 
+				(m_stateOfGame[1][2] == m_stateOfGame[2][2]) &&
+				(m_stateOfGame[0][2] != '*'));
 		
 	return won;	
 }
 
 bool Board::gameDraw()
 {
-	return moves > 8 && !gameWon() ? true : false;
+	bool draw = m_moves > 8 && !gameWon() ? true : false;
+	return draw;
 }
 
-void Board::display()
+void Board::displayBoard()
 {
-	sampleBoardDisplay();
-	updatedBoardDisplay();
+	displaySampleBoard();
+	displayUpdatedBoard();
 }
