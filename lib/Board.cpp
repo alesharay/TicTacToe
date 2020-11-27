@@ -54,7 +54,7 @@ bool Board::stateOfGameUpdated(int row, int col, int playerNum)
 
 	playerNum=playerNum-1;
 	
-	assert(playerNum == 1 || playerNum == 2);
+	assert(playerNum == 0 || playerNum == 1);
 
 	if(playerNum == 0)
 	{
